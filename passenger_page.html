@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SNTF - Soumettre une Réclamation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 10px;
+        }
+
+        .logo-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(45deg, #1e3c72, #2a5298);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 24px;
+        }
+
+        .agent-login-link {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .agent-login-link:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .main-content {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e1e5e9;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #2a5298;
+            box-shadow: 0 0 0 3px rgba(42, 82, 152, 0.1);
+        }
+
+        textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            background: linear-gradient(45deg, #1e3c72, #2a5298);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(30, 60, 114, 0.3);
+            width: 100%;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(30, 60, 114, 0.4);
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .message {
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border: 1px solid;
+        }
+
+        .message.success {
+            background: #d4edda;
+            color: #155724;
+            border-color: #c3e6cb;
+        }
+
+        .message.error {
+            background: #f8d7da;
+            color: #721c24;
+            border-color: #f5c6cb;
+        }
+
+        @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .agent-login-link {
+                position: static;
+                display: block;
+                text-align: center;
+                margin-top: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="agent_login.php" class="agent-login-link">👨‍💼 Espace Agent</a>
+    
+    <div class="container">
+        <div class="header">
+            <div class="logo">
+                <div class="logo-icon">SNTF</div>
+                <div>
+                    <h1>Système de Réclamations</h1>
+                    <p style="color: #666; margin-top: 5px;">Société Nationale des Transports Ferroviaires</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <h2 style="margin-bottom: 25px; color: #1e3c72; text-align: center;">🎫 Soumettre une Réclamation</h2>
+            
+            <div id="message-container"></div>
+
+            <form id="reclamation-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="nom">Nom complet *</label>
+                        <input type="text" id="nom" name="nom" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email *</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="telephone">Téléphone</label>
+                        <input type="tel" id="telephone" name="telephone">
+                    </div>
+                    <div class="form-group">
+                        <label for="ligne">Ligne ferroviaire concernée *</label>
+                        <select id="ligne" name="ligne" required>
+                            <option value="">-- Sélectionner une ligne --</option>
+                            <option value="alger-oran">Alger - Oran</option>
+                            <option value="alger-constantine">Alger - Constantine</option>
+                            <option value="alger-annaba">Alger - Annaba</option>
+                            <option value="oran-tlemcen">Oran - Tlemcen</option>
+                            <option value="constantine-touggourt">Constantine - Touggourt</option>
+                            <option value="autre">Autre</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="categorie">Catégorie de réclamation *</label>
+                        <select id="categorie" name="categorie" required>
+                            <option value="">-- Sélectionner une catégorie --</option>
+                            <option value="retard">Retards</option>
+                            <option value="personnel">Comportement du personnel</option>
+                            <option value="proprete">Propreté des gares/trains</option>
+                            <option value="billetterie">Problème de billetterie</option>
+                            <option value="equipement">Équipement défaillant</option>
+                            <option value="securite">Sécurité</option>
+                            <option value="autre">Autre</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="priorite">Niveau de priorité</label>
+                        <select id="priorite" name="priorite">
+                            <option value="faible">Faible</option>
+                            <option value="moyenne" selected>Moyenne</option>
+                            <option value="elevee">Élevée</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="date-incident">Date de l'incident</label>
+                    <input type="date" id="date-incident" name="date-incident">
+                </div>
+
+                <div class="form-group">
+                    <label for="description">Description détaillée de votre réclamation *</label>
+                    <textarea id="description" name="description" placeholder="Veuillez décrire votre réclamation de manière détaillée..." required></textarea>
+                </div>
+
+                <button type="submit" class="btn" id="submit-btn">📤 Soumettre la réclamation</button>
+            </form>
+			<br>
+			
+			<a href="suivre_reclamation.php" class="btn" style="" >👨suivre une reclamation</a>
+        </div>
+    </div>
+
+    <script>
+        // Fonction pour afficher un message
+        function showMessage(message, type = 'success') {
+            const container = document.getElementById('message-container');
+            container.innerHTML = `<div class="message ${type}">${message}</div>`;
+            
+            setTimeout(() => {
+                container.innerHTML = '';
+            }, 5000);
+        }
+
+        // Fonction pour soumettre une réclamation
+        document.getElementById('reclamation-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const submitBtn = document.getElementById('submit-btn');
+            submitBtn.disabled = true;
+            submitBtn.textContent = '⏳ Envoi en cours...';
+            
+            const formData = new FormData(e.target);
+            
+            fetch('submit_reclamation.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    showMessage(`✅ ${data.message} Numéro de référence : ${data.reference}`, 'success');
+                    e.target.reset();
+                } else {
+                    showMessage(`❌ ${data.message}`, 'error');
+                }
+            })
+            .catch(error => {
+                showMessage('❌ Erreur de connexion. Veuillez réessayer.', 'error');
+                console.error('Erreur:', error);
+            })
+            .finally(() => {
+                submitBtn.disabled = false;
+                submitBtn.textContent = '📤 Soumettre la réclamation';
+            });
+        });
+
+        // Initialisation
+        document.addEventListener('DOMContentLoaded', function() {
+            // Définir la date maximale pour le champ date (aujourd'hui)
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('date-incident').setAttribute('max', today);
+        });
+    </script>
+</body>
+</html>
