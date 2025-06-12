@@ -1,0 +1,38 @@
+stateDiagram-v2
+    [*] --> EnAttente : Soumission réclamation
+    
+    EnAttente : 🟡 En attente
+    EnAttente : Réclamation soumise
+    EnAttente : En attente d'assignation
+    
+    EnCours : 🔵 En cours
+    EnCours : Réclamation assignée
+    EnCours : En cours de traitement
+    
+    Resolue : 🟢 Résolue
+    Resolue : Réclamation traitée
+    Resolue : et fermée
+    
+    EnAttente --> EnCours : Assignation à un agent
+    EnCours --> EnAttente : Retour en attente\n(si besoin d'informations)
+    EnCours --> Resolue : Traitement terminé
+    EnCours --> EnCours : Mise à jour du traitement
+    Resolue --> [*] : Archivage
+    
+    note right of EnAttente
+        État initial après soumission
+        Couleur: Jaune
+        Action: Attribution automatique
+    end note
+    
+    note right of EnCours
+        État de traitement actif
+        Couleur: Bleu
+        Action: Traitement par agent
+    end note
+    
+    note right of Resolue
+        État final
+        Couleur: Vert
+        Action: Clôture et archivage
+    end note

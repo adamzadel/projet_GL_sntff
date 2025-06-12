@@ -1,0 +1,95 @@
+classDiagram
+    class Reclamation {
+        -id : Long
+        -numeroReference : String
+        -titre : String
+        -description : String
+        -dateCreation : DateTime
+        -dateModification : DateTime
+        -lignesFerroviaires : String
+        -voyageurId : Long
+        -agentId : Long
+        -categorieId : Long
+        -statutId : Long
+        -prioriteId : Long
+        +soumettre()
+        +modifierStatut()
+        +assignerAgent()
+        +genererReference()
+    }
+    
+    class Voyageur {
+        -id : Long
+        -nom : String
+        -prenom : String
+        -email : String
+        -telephone : String
+        -dateInscription : DateTime
+        +creerReclamation()
+        +suivreReclamation()
+        +consulterHistorique()
+    }
+    
+    class Agent {
+        -id : Long
+        -nom : String
+        -prenom : String
+        -email : String
+        -motDePasse : String
+        -role : String
+        -dernierConnexion : DateTime
+        -actif : Boolean
+        +seConnecter()
+        +traiterReclamation()
+        +mettreAJourStatut()
+        +consulterTableauBord()
+    }
+    
+    class Categorie {
+        -id : Long
+        -nom : String
+        -description : String
+        -couleur : String
+        -active : Boolean
+        +getReclamations()
+        +compterReclamations()
+    }
+    
+    class Statut {
+        -id : Long
+        -nom : String
+        -description : String
+        -couleur : String
+        -ordre : Integer
+        +getReclamations()
+        +getStatutSuivant()
+    }
+    
+    class Priorite {
+        -id : Long
+        -nom : String
+        -description : String
+        -couleur : String
+        -niveau : Integer
+        +getReclamations()
+        +calculerDelai()
+    }
+    
+    class Rapport {
+        -id : Long
+        -titre : String
+        -dateGeneration : DateTime
+        -type : String
+        -donnees : String
+        -agentId : Long
+        +generer()
+        +exporter()
+    }
+    
+    Reclamation ||--|| Voyageur
+    Reclamation ||--o| Agent
+    Reclamation ||--|| Categorie
+    Reclamation ||--|| Statut
+    Reclamation ||--|| Priorite
+    Agent ||--o{ Rapport
+    Agent ||--o{ Reclamation

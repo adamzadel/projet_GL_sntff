@@ -1,0 +1,57 @@
+flowchart TB
+    subgraph System ["🏢 Système de Gestion des Réclamations SNTF"]
+        subgraph VoyageurUC ["Fonctionnalités Voyageur"]
+            UC1["📝 Soumettre réclamation"]
+            UC2["👁️ Suivre réclamation"]
+            UC3["📋 Consulter historique"]
+        end
+        
+        subgraph AgentUC ["Fonctionnalités Agent"]
+            UC4["🔐 Se connecter"]
+            UC5["⚙️ Traiter réclamation"]
+            UC6["🔄 Mettre à jour statut"]
+            UC7["📊 Consulter tableau de bord"]
+        end
+        
+        subgraph AdminUC ["Fonctionnalités Administrateur"]
+            UC8["👥 Gérer agents"]
+            UC9["📈 Générer rapports"]
+            UC10["📊 Consulter statistiques"]
+            UC11["⚙️ Configurer système"]
+        end
+    end
+    
+    Voyageur(["👤 Voyageur"])
+    Agent(["👨‍💼 Agent SNTF"])
+    Admin(["🔧 Administrateur"])
+    
+    %% Relations Voyageur
+    Voyageur --> UC1
+    Voyageur --> UC2
+    Voyageur --> UC3
+    
+    %% Relations Agent
+    Agent --> UC4
+    Agent --> UC5
+    Agent --> UC6
+    Agent --> UC7
+    
+    %% Relations Admin
+    Admin --> UC8
+    Admin --> UC9
+    Admin --> UC10
+    Admin --> UC11
+    
+    %% Relations Include
+    UC4 -.->|include| UC5
+    UC4 -.->|include| UC6
+    UC4 -.->|include| UC7
+    
+    %% Styles
+    classDef actor fill:#e3f2fd,stroke:#1976d2,stroke-width:2px
+    classDef usecase fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px
+    classDef system fill:#e8f5e8,stroke:#388e3c,stroke-width:2px
+    
+    class Voyageur,Agent,Admin actor
+    class UC1,UC2,UC3,UC4,UC5,UC6,UC7,UC8,UC9,UC10,UC11 usecase
+    class System system
