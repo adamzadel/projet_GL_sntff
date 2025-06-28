@@ -1,71 +1,28 @@
-graph TB
-    subgraph "Internet"
-        Users[👥 Utilisateurs<br/>Voyageurs & Agents]
+%% Deployment Diagram for Système de Gestion des Réclamations SNTF
+graph TD
+    %% Nodes
+    subgraph User_PC ["💻 PC Utilisateur (Navigateur)"]
+        Browser["🌐 Navigateur Web<br/>(Soumission réclamation)"]
     end
     
-    subgraph "DMZ - Zone Démilitarisée"
-        LB[⚖️ Load Balancer<br/>Nginx/Apache]
-        FW[🛡️ Firewall<br/>Sécurité réseau]
+    subgraph Local_Server ["🖥️ Serveur Local (XAMPP sur PC)"]
+        Apache["🧩 Apache Web Server"]
+        PHP["🔧 Script PHP<br/>(backend logic)"]
+        MySQL["🗄️ Base de Données MySQL"]
+        AdminPanel["📊 Interface Admin/Agent (admin.php)"]
     end
     
-    subgraph "Couche Présentation"
-        WS1[🖥️ Serveur Web 1<br/>Apache/Nginx<br/>Frontend React.js]
-        WS2[🖥️ Serveur Web 2<br/>Apache/Nginx<br/>Frontend React.js]
-    end
+    %% Connections
+    Browser -->|"HTTP (formulaire / dashboard)"| Apache
+    Apache --> PHP
+    PHP --> MySQL
+    PHP --> AdminPanel
     
-    subgraph "Couche Application"
-        AS1[⚙️ Serveur App 1<br/>Node.js + Express<br/>API REST]
-        AS2[⚙️ Serveur App 2<br/>Node.js + Express<br/>API REST]
-        CACHE[🚀 Cache Redis<br/>Sessions & Cache]
-    end
+    %% Styling
+    classDef server fill:#e8f5e9,stroke:#388e3c,stroke-width:2px,color:#000
+    classDef user fill:#e3f2fd,stroke:#1976d2,stroke-width:2px,color:#000
+    classDef comp fill:#fff3cd,stroke:#ff9800,stroke-width:1px,color:#000
     
-    subgraph "Couche Données"
-        DB_MASTER[🗄️ BD Principale<br/>MySQL Master<br/>Lecture/Écriture]
-        DB_SLAVE[🗄️ BD Réplique<br/>MySQL Slave<br/>Lecture seule]
-        BACKUP[💾 Serveur Backup<br/>Sauvegarde quotidienne]
-    end
-    
-    subgraph "Monitoring & Logs"
-        MON[📊 Monitoring<br/>Surveillance système]
-        LOGS[📋 Serveur Logs<br/>Audit & Traces]
-    end
-    
-    Users --> FW
-    FW --> LB
-    LB --> WS1
-    LB --> WS2
-    
-    WS1 --> AS1
-    WS2 --> AS2
-    WS1 --> AS2
-    WS2 --> AS1
-    
-    AS1 --> CACHE
-    AS2 --> CACHE
-    AS1 --> DB_MASTER
-    AS2 --> DB_MASTER
-    AS1 --> DB_SLAVE
-    AS2 --> DB_SLAVE
-    
-    DB_MASTER --> DB_SLAVE
-    DB_MASTER --> BACKUP
-    DB_SLAVE --> BACKUP
-    
-    AS1 --> MON
-    AS2 --> MON
-    WS1 --> LOGS
-    WS2 --> LOGS
-    AS1 --> LOGS
-    AS2 --> LOGS
-    
-    classDef webServer fill:#e1f5fe
-    classDef appServer fill:#f3e5f5
-    classDef database fill:#e8f5e8
-    classDef security fill:#ffebee
-    classDef monitoring fill:#fff3e0
-    
-    class WS1,WS2 webServer
-    class AS1,AS2,CACHE appServer
-    class DB_MASTER,DB_SLAVE,BACKUP database
-    class FW,LB security
-    class MON,LOGS monitoring
+    class User_PC user
+    class Local_Server server
+    class Apache,PHP,MySQL,AdminPanel comp
