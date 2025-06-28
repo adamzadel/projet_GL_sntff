@@ -86,10 +86,10 @@ classDiagram
         +exporter()
     }
     
-    Reclamation ||--|| Voyageur
-    Reclamation ||--o| Agent
-    Reclamation ||--|| Categorie
-    Reclamation ||--|| Statut
-    Reclamation ||--|| Priorite
-    Agent ||--o{ Rapport
-    Agent ||--o{ Reclamation
+    Reclamation "1" -- "1" Voyageur
+    Reclamation "1" -- "0..1" Agent
+    Reclamation "1" -- "1" Categorie
+    Reclamation "1" -- "1" Statut
+    Reclamation "1" -- "1" Priorite
+    Agent "1" -- "0..*" Rapport
+    Agent "1" -- "0..*" Reclamation
